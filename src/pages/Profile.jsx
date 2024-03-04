@@ -65,11 +65,11 @@ function Profile() {
     }))
   }
 
-  useEffect(() => {
-    if (formData === null){
-      navigate('/sign-in')
-    }
-  }, [auth.currentUser])
+  // useEffect(() => {
+  //   if (formData === null){
+  //     navigate('/sign-in')
+  //   }
+  // }, [auth.currentUser])
 
   return formData ? 
   <div className="profile">
