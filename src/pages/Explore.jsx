@@ -8,6 +8,22 @@ function Explore() {
       <header>
         <p className="pageHeader">Explore</p>
       </header>
+
+      <main>
+        {/* slider goes here */}
+
+        <p className="exploreCategoryHeading">Category</p>
+        <div className="exploreCategories">
+          <Link to="/category/rent">
+            <img src={rentCategoryImage} alt="rent" className="exploreCategoryImg"/>
+            <p className="exploreCategoryName">Places for Rent</p>
+          </Link>
+          <Link to="/category/sell">
+            <img src={sellCategoryImage} alt="sell" className="exploreCategoryImg"/>
+            <p className="exploreCategoryName">Places for Sell</p>
+          </Link>
+        </div>
+      </main>
     </div>
   )
 }
