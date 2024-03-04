@@ -1,6 +1,6 @@
-import { getAuth, updateProfile, verifyBeforeUpdateEmail } from "firebase/auth"
-import { useNavigate, Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { getAuth, updateProfile} from "firebase/auth"
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 import { db } from '../firebase.config'
 import { doc, updateDoc } from "firebase/firestore"
 import { toast } from "react-toastify"
