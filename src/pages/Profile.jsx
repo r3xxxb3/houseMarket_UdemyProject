@@ -1,9 +1,11 @@
 import { getAuth, updateProfile} from "firebase/auth"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useState } from "react"
 import { db } from '../firebase.config'
 import { doc, updateDoc } from "firebase/firestore"
 import { toast } from "react-toastify"
+import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg"
+import homeIcon from "../assets/svg/homeIcon.svg"
 
 function Profile() {
   const auth = getAuth()
@@ -94,6 +96,12 @@ function Profile() {
           <input type="email" id="email" className='profileEmail' value={email} disabled/>
         </form>
       </div>
+
+      <Link to="/create-listing" className="createListing">
+        <img src={homeIcon} alt="home" />
+        <p>Sell or rent your property</p>
+        <img src={arrowRight} alt="arrow right" />
+      </Link>
     </main>
   </div>
   : "Not Logged In"
