@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
+import SwiperCore, {Navigation, Pagination, Scrollbar, Ally} from 'swiper'
+import { Swiper, SwiperSlide } from "swiper/react"
+import 'swiper/swiper-bundle.css'
+import 'swiper/css'
 import { doc, getDoc } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
 import  { db } from '../firebase.config'
@@ -37,7 +41,16 @@ function Listing() {
 
     return (
         <main>
-            {/* slider */}
+            <Swiper slidesPerView={1} centeredSlides={true} pagination={{ clickable: true }}>
+                {/* {listing.imageUrls.map((image) => {console.log(image)})} */}
+                {listing.imageUrls.map((url, index) => (
+                    <SwiperSlide key={index}>
+                        <div key={index} style={{ width: "100%", height: "300px", backgroundSize: "cover"}}>
+                            <img src={url} alt={listing.name} style={{width: "100%", height: "100%"}}/>
+                        </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
 
             <div className="shareIconDiv" onClick={() => {
                 navigator.clipboard.writeText(window.location.href)
