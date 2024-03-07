@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import Spinner from "../components/Spinner"
 
 function CreateListing() {
+    const GEOCODING_KEY = process.env.REACT_APP_GEOCODING_API_KEY
     const [loading, setLoading] = useState(false)
-    const [geoLocationEnabled, setGeoLocationEnabled] = useState(false)
+    const [geoLocationEnabled, setGeoLocationEnabled] = useState(true)
     const [formData, setFormData] = useState({
         type: "rent",
         name: '',
@@ -43,9 +45,35 @@ function CreateListing() {
 
     const isMounted = useRef(true)
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
-        console.log(formData)
+
+        if (discountedPrice >= regularPrice) {
+            setLoading(false)
+            toast.error("Discounted price needs to be less than regular price !")
+            return
+        }
+
+        if (images.length > 6) {
+            setLoading(false)
+            toast.error("Max 6 Images")
+            return
+        }
+
+        let geoLocation = {}
+        let location 
+        
+        if (geoLocationEnabled) {
+            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${GEOCODING_KEY}`)
+            const data = await response.json()
+            console.log(data)
+        }else{
+            geoLocation.lat = latitude
+            geoLocation.lng = longitude
+            location = address
+        }
+
+        setLoading(false)
     }
 
     const onMutate = (e) => {
@@ -77,6 +105,11 @@ function CreateListing() {
     }
 
     useEffect(() => {
+
+        if (GEOCODING_KEY === undefined || GEOCODING_KEY === null || GEOCODING_KEY === "") {
+            setGeoLocationEnabled(false)
+        }
+
         if(isMounted) {
             onAuthStateChanged(auth, (user) => {
                 if(user) {
